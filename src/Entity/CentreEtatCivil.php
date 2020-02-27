@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CentreEtatCivilRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class CentreEtatCivil
 {
@@ -38,9 +40,45 @@ class CentreEtatCivil
      */
     private $acteDeces;
 
+    /**
+     * CallBack appelé à chaque fois que l'on veut ajouter un centre d'etat civil à la bd
+     * 
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function PrePersist()
+    {
+        if (empty($this->createAt)) {
+            $this->createAt = new \DateTime();
+        }
+    }
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
     public function __construct()
     {
         $this->acteDeces = new ArrayCollection();
+    }
+
+    /**
+     * Permet de générer un slug pour le centre d'état civil
+     * 
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     * @return String
+     */
+    public function initializeSlug()
+    {
+        if (empty($this->slug)) {
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->libelle);
+        }
     }
 
     public function getId(): ?int
@@ -111,6 +149,18 @@ class CentreEtatCivil
                 $acteDece->setCentreEtatCivil(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

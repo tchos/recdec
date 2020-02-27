@@ -2,14 +2,24 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks
+ * 
+ * L'email doit être unique chez chaque user
+ * @UniqueEntity(
+ *      fields = {"email"},
+ *      message = "Un autre utilisateur s'est déjà inscrit avec cette adresse email, merci de la modifier."
+ * )
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -49,9 +59,30 @@ class User
      */
     private $acteDeces;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Role", mappedBy="users")
+     */
+    private $userRoles;
+
     public function __construct()
     {
         $this->acteDeces = new ArrayCollection();
+        $this->userRoles = new ArrayCollection();
+    }
+
+    /**
+     * Permet de générer un slug pour le user
+     * 
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     */
+    public function initializeSlug()
+    {
+        if (empty($this->slug)) {
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->fullName);
+        }
     }
 
     public function getId(): ?int
@@ -149,4 +180,59 @@ class User
 
         return $this;
     }
+
+    /**
+     * @return Collection|Role[]
+     */
+    public function getUserRoles(): Collection
+    {
+        return $this->userRoles;
+    }
+
+    public function addUserRole(Role $userRole): self
+    {
+        if (!$this->userRoles->contains($userRole)) {
+            $this->userRoles[] = $userRole;
+            $userRole->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRole(Role $userRole): self
+    {
+        if ($this->userRoles->contains($userRole)) {
+            $this->userRoles->removeElement($userRole);
+            $userRole->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    // Les fonction à implémenter pour l'interface UserInterface
+
+    public function getRoles()
+    {
+        $roles = $this->userRoles->map(function ($role) {
+            return $role->getTitle();
+        })->toArray();
+
+        $roles[] = 'ROLE_USER';
+
+        return $roles;
+    }
+
+    public function getPassword()
+    {
+        return $this->hash;
+    }
+
+    public function getSalt(){}
+
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    public function eraseCredentials(){}
 }

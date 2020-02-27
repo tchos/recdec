@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ActeDecesRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class ActeDeces
 {
@@ -81,6 +83,39 @@ class ActeDeces
      * @ORM\JoinColumn(nullable=false)
      */
     private $agentSaisie;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    /**
+     * CallBack appelé à chaque fois que l'on veut enregistrer un acte de naissance
+     * 
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function PrePersist()
+    {
+        if (empty($this->dateSaisie)) {
+            $this->dateSaisie = new \DateTime();
+        }
+        if (empty($this->age)) {
+            //age = dateNaissance - dateDeces
+            $this->age = $this->dateDeces->diff($this->dateNaissance)->format('%y');
+        }
+        if (empty($this->slug)) {
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->fullName);
+        }
+    }
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateActe;
 
     public function getId(): ?int
     {
@@ -239,6 +274,30 @@ class ActeDeces
     public function setAgentSaisie(?User $agentSaisie): self
     {
         $this->agentSaisie = $agentSaisie;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getDateActe(): ?\DateTimeInterface
+    {
+        return $this->dateActe;
+    }
+
+    public function setDateActe(?\DateTimeInterface $dateActe): self
+    {
+        $this->dateActe = $dateActe;
 
         return $this;
     }
