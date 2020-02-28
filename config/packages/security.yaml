@@ -15,7 +15,20 @@ security:
             security: false
         main:
             anonymous: lazy
-            provider: users_in_memory
+
+            # pour se connecter: "account_login" est la route du formulaire de connexion
+            provider: in_database
+
+            form_login:
+                login_path: account_login
+                check_path: account_login
+            
+            # déconnexion: "account_logout" est la route de déconnexion qui nous redirigera vers la connexion
+            logout:
+                path: account_logout
+                target: homepage
+
+
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

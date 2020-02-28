@@ -48,8 +48,8 @@ class AppFixtures extends Fixture
         // création d'un user qui aura, en plus du rôle par défaut ('ROLE_USER'), le role d'administrateur
         $adminUser = new User();
         $adminUser->setFullName('Kwette Noumsi')
-                  ->setEmail('kwenol@yahoo.fr')
-                  ->setHash($this->encoder->encodePassword($adminUser, 'elkadirikamal'))
+                  ->setEmail('kwette@minfi.cm')
+                  ->setHash($this->encoder->encodePassword($adminUser, 'minfi'))
                   ->setEquipe($equipes[10])
                   ->addUserRole($adminRole)
         ;

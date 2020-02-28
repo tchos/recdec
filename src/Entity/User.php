@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -30,11 +31,13 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez renseigner le nom complet de l'utilisateur !")
      */
     private $fullName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email(message="Veuillez renseigner un email valide !")
      */
     private $email;
 
@@ -42,6 +45,11 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $hash;
+
+    /**
+     *@Assert\EqualTo(propertyPath="hash", message="Les mots de passe entrés ne correspondent pas !")
+     */
+    public $passwordConfirm;
 
     /**
      * @ORM\Column(type="string", length=255)

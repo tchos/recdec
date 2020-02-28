@@ -1,6 +1,6 @@
 body
 {
-    font-size: 17px;
+    font-size: 15px;
 }
 
 div.carousel-caption
@@ -65,4 +65,20 @@ span.rating i {
 
 .alert .btn {
     color: white;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+}
+
+.navbar {
+    height: 60px;
 }
