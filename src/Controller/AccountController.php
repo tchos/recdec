@@ -46,49 +46,10 @@ class AccountController extends AbstractController
     public function logout(){}
 
     /**
-     * Permet d'afficher le formulaire d'inscription
-     * 
-     * @Route("/register", name="account_register")
-     * 
-     * @return Response
-     */
-    public function register(Request $request, UserPasswordEncoderInterface $encoder, 
-        EntityManagerInterface $manager)
-    {
-        $user = new User();
-
-        //$manager = $this->getDoctrine()->getManager();
-
-        $form = $this->createForm(RegistrationType::class, $user);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // On encode le mot de passe avant de l'enregistrer dans la base de données
-            $hash = $encoder->encodePassword($user, $user->getHash());
-            $user->setHash($hash);
-
-            $manager->persist($user);
-            $manager->flush();
-
-            // pour la fenêtre d'alerte success confirmant la réussite de l'inscription
-            $this->addFlash(
-                'success',
-                'Votre compte a bien été créé, vous pouvez maintenant vous connectez !'
-            );
-
-            // Redirection vers la page de connexion
-            return $this->redirectToRoute('account_login');
-        }
-        return $this->render('account/registration.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
-
-    /**
      * Permet de modifier le profile de l'utilisateur
      * 
      * @Route("account/profile", name="account_profile")
+     * @Security("is_granted('ROLE_USER')")
      *
      * @return Response
      */

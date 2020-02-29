@@ -1,0 +1,103 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block body %}
+    <div class="container-fluid my-3">
+        <div class="row">
+            <div class="col">
+                <div class="card bg-primary text-white mb-3 text-center">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <i class="fas fa-users fa-3x"></i>
+                            </div>
+                            <div class="col-8">
+                                <h4 class="card-title">{{stats.users }} utilisateurs inscrits</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card bg-dark text-white mb-3 text-center">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <i class="fas fa-folder-open fa-3x"></i>
+                            </div>
+                            <div class="col-8">
+                                <h4 class="card-title">{{ stats.actes }} actes de décès</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="col">
+                    <div class="card bg-warning text-white mb-3 text-center">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-4">
+                                    <i class="fas fa-hotel fa-3x"></i>
+                                </div>
+                                <div class="col-8">
+                                    <h4 class="card-title">{{ stats.centres }} centres d'état civils</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="col">
+                    <div class="card bg-success text-white mb-3 text-center">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-4">
+                                    <i class="fas fa-people-carry fa-3x"></i>
+                                </div>
+                                <div class="col-8">
+                                    <h4 class="card-title">{{ stats.equipes }} équipes de personnes</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-secondary">
+                    <h3 class="alert-heading my-3">
+                        <i class="fas fa-arrow-up"></i>
+                        Statistiques des saisies par utilisateurs
+                    </h3>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="table-primary">
+                                <th class="text-center"><i class="fas fa-sort-up"></i> Rang</th>
+                                <th><i class="fas fa-address-card"></i> Noms et prénoms</th>
+                                <th class="text-center"><i class="fas fa-coins"></i> Compteur</th>
+                                <th class="text-center">Equipe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% set rang = 1 %}
+                            {% for statUser in userStats %}
+                                <tr>
+                                    <td class="text-center">{{ rang }}</td>
+                                    <td>{{ statUser.fullName }}</td>
+                                    <td class="text-center">{{ statUser.compteur }}</td>
+                                    <td class="text-center">{{ statUser.libelle }}</td>
+                                </tr>
+                                {% set rang = rang + 1 %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

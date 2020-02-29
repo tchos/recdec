@@ -19,6 +19,38 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    /**
+     * Permet de voir les meilleurs agents de saisie
+     *
+     * @param Integer $limit
+     * @return void
+     */
+    public function findBestUser($limit)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.fullName as fullName, COUNT(a.numeroActe) as compteur, e.libelle as libelle')
+            ->join('u.acteDeces', 'a')
+            ->join('u.equipe', 'e')
+            ->groupBy('u')
+            ->orderBy('compteur', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findWorstUser($limit)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.fullName as fullName, COUNT(a.numeroActe) as compteur, e.libelle as libelle')
+            ->join('u.acteDeces', 'a')
+            ->join('u.equipe', 'e')
+            ->groupBy('u')
+            ->orderBy('compteur', 'ASC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
