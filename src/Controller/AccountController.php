@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\AccountType;
 use App\Entity\PasswordUpdate;
-use App\Form\RegistrationType;
 use App\Form\PasswordUpdateType;
 use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
@@ -49,7 +48,7 @@ class AccountController extends AbstractController
      * Permet de modifier le profile de l'utilisateur
      * 
      * @Route("account/profile", name="account_profile")
-     * @Security("is_granted('ROLE_USER')")
+     * @IsGranted("ROLE_USER")
      *
      * @return Response
      */

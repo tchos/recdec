@@ -21,19 +21,28 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link taille" href="{{ path('actes_index') }}">
+                <a class="nav-link taille" href="{{ path('admin_acte_index') }}">
                     <i class="fas fa-eye"></i>
                     Voir mes saisies
                 </a>
             </li>
-            {#
-            <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" 
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-users-cog"></i>
+                    Gestion des users
+                </a>
+                <div class="dropdown-menu" style="">
+                    <a class="dropdown-item" href="{{ path('admin_account_register') }}">
+                        <i class="fas fa-user-plus"></i>
+                        Ajouter un user
+                    </a>
+                    <a class="dropdown-item" href="{{ path('admin_user_index') }}">
+                        <i class="fas fa-eye"></i>
+                        Lister les users
+                    </a>
+                </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-            </li>
-            #}
         </ul>
         <ul class="navbar-nav ml-auto">
             {% if app.user %}
@@ -45,12 +54,19 @@
                         <a href="#" class="dropdown-item">Saisir acte</a>
                         <a href="{{ path('actes_index') }}" class="dropdown-item">Mes saisies</a>
                         <div class="dropdown-divider"></div>
-                        <a href="{{ path('account_password') }}" class="dropdown-item">Modifier mot de passe</a>
-                        <a href="{{ path('account_profile') }}" class="dropdown-item">Modifier mon profil</a>
+                        <a href="{{ path('admin_password_update') }}" class="dropdown-item">
+                            <i class="fas fa-user-lock"></i>
+                            Modifier mot de passe
+                        </a>
+                        <a href="{{ path('admin_account_profile') }}" class="dropdown-item">
+                            <i class="fas fa-user-edit"></i>
+                            Modifier mon profil
+                        </a>
                         <div class="dropdown-divider"></div>
                         <a href="{{ path('admin_account_logout') }}" class="dropdown-item"
                             id="myLinkToConfirm" data-confirm-title="Attention !" 
                             data-confirm-message="Etes-vous sûr de vouloir vous déconnectez ?">
+                            <i class="fas fa-sign-out-alt"></i>
                             Déconnexion
                         </a>
                     </div>

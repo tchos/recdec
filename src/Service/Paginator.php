@@ -28,8 +28,9 @@ class Paginator
     }
 
     /**
-     * Permet d'afficher un template twig particulier
-     *
+     * Permet d'afficher le template twig pour la pagination
+     * "templatePath" a été configuré dans le fichier des services: services.yaml
+     * 
      * @return Template
      */
     public function display()
@@ -52,9 +53,13 @@ class Paginator
             throw new \Exception("Vous n'avez pas spécifié l'entité sur laquelle nous devons paginer !
                  Utilisez la méthode setEntityClass() de votre objet Paginator !");
         }
-        // 1) On recupère le repository de l'entité et on calcumle le nombre d'enregistrements sur l'entité
+        // 1) On recupère le repository de l'entité et on calcule le nombre d'enregistrements sur l'entité
         $repo = $this->manager->getRepository($this->entityClass);
-        $total = count($repo->findBy(['agentSaisie' => $this->user]));
+
+        if(!empty($this->user))
+            $total = count($repo->findBy(['agentSaisie' => $this->user], []));
+        else
+            $total = count($repo->findAll());
 
         // 2) Calcul du nombre de pages
         // la fonction "ceil()" arrondi un nombre décimal à l'entier supérieur. Ex: 3,4 => 4
@@ -79,7 +84,14 @@ class Paginator
 
         // 2) On recupère le repository de l'entité et on lui demande de nous fournir les données
         $repo = $this->manager->getRepository($this->entityClass);
-        $data = $repo->findBy(['agentSaisie' => $this->user], ['dateSaisie' => 'DESC'], $this->limit, $offset);
+
+        if (!empty($this->user))
+        {
+            $data = $repo->findBy(['agentSaisie' => $this->user], ['dateSaisie' => 'DESC'], 
+                $this->limit, $offset);
+        } else {
+            $data = $repo->findBy([], [], $this->limit, $offset);
+        }
 
         // 3) On renvoie les données
         return $data;

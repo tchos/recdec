@@ -6,23 +6,21 @@ use App\Entity\ActeDeces;
 use App\Service\Paginator;
 use App\Repository\ActeDecesRepository;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class ActeController extends AbstractController
+class AdminActeController extends AbstractController
 {
     /**
-     * @Route("/actes/{page<\d+>?1}", name="actes_index")
-     * @IsGranted("ROLE_USER")
+     * Permet de lister les saisies effectuées pas l'administrateur
+     * @Route("/admin/actes/{page<\d+>?1}", name="admin_acte_index")
      */
-    public function index(ActeDecesRepository $repo, $page, Paginator $paginator)
+    public function index($page, Paginator $paginator)
     {
         $paginator->setEntityClass(ActeDeces::class)
                   ->setUser($this->getUser())
-                  ->setPage($page)
-        ;
+                  ->setPage($page);
 
-        return $this->render('acte/index.html.twig', [
+        return $this->render('admin/acte/index.html.twig', [
             'paginator' => $paginator,
         ]);
     }

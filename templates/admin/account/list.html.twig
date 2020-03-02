@@ -1,0 +1,53 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Les utilisateurs{% endblock %}
+
+{% block body %}
+     <div class="container-fluid">
+        <h2 class="my-5">Administration des utilisateurs</h2>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Noms et prénoms</th>
+                    <th>Email</th>
+                    <th>Equipe</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in paginator.data %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.fullName }}</td>
+                        <td>
+                            {{ user.email }}
+                        </td>
+                        <td>{{ user.equipe.libelle }}</td>
+                        <td>
+                            <a href="{{ path('admin_user_edit', {'slug': user.slug}) }}" class="btn btn-primary">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{{ path('admin_user_delete', {'id': user.id}) }}" class="btn btn-danger"
+                                id="myLinkToConfirm" data-confirm-title="Attention !" 
+                                data-confirm-message="Etes-vous sûr de vouloir supprimer l'annonce: 
+                                    <strong>{{user.fullName}}</strong> ?">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {# Service de pagination #}
+        {{ paginator.display() }}
+    </div>
+{% endblock %}
+
+{# surchage du block javascript du template de base #}
+{% block javascripts %}
+    <script>
+        $('#myLinkToConfirm').confirmModal();
+    </script>
+{% endblock %}
