@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MODIFICATION DE L'ACTE DE DÉCÈS n° {{ acteDeces.numeroActe }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="h1">MODIFICATION DE L'ACTE DE DÉCÈS n° {{ acteDeces.numeroActe }} !</h1>
+
+        {# Affichage du formulaire créé avec symfony#}
+        {{ form_start(form) }}
+            <h3 class="text-primary">
+                Veuillez saisir les informations telles que portées sur les actes
+                <span class="badge badge-primary float-right">COMPTEUR: {{ compteur }}</span>
+            </h3>
+            <hr>
+            <div class="alert alert-secondary">
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(form.centreEtatCivil) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(form.numeroActe) }}
+                    </div>
+                </div>
+                {{ form_row(form.fullName) }}
+                <div class="row">
+                    <div class="col">
+                        <div class="alert alert-light">
+                            {{ form_row(form.dateDeces) }}
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="alert alert-light">
+                            {{ form_row(form.lieuDeces) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="alert alert-light">
+                            {{ form_row(form.dateNaissance) }}
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="alert alert-light">
+                            {{ form_row(form.lieuNaissance) }}
+                        </div>
+                    </div>
+                </div>
+                {{ form_row(form.profession) }}
+                {{ form_row(form.domicile) }}
+                {{ form_row(form.declarant) }}
+                {{ form_row(form.dateActe) }}
+            </div>
+
+            <div class="alert alert-success clearfix">
+                <h3 class="alert-heading">Sauvegarder l'acte de décès</h3>
+                <p>
+                    Vous êtes sur le point de modifier les informations de l'acte de 
+                    décès n° {{ acteDeces.numeroActe }}, cliquez sur le bouton "Enregistrer les modifications" !
+                </p>
+                <button type="submit" class="btn btn-primary float-right">
+                    <i class="fas fa-check"></i>
+                    Enregistrer les modifications
+                </button>
+            </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

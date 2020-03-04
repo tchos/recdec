@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Accueil !{% endblock %}
 
 {% block body %}
     <div class="container my-4">
@@ -15,7 +15,7 @@
                 et pensionnés décédés telles que portées sur les actes de décès collectés.
             </p>
             <p class="lead">
-                <a class="btn btn-primary btn-lg" href="#" role="button">
+                <a class="btn btn-primary btn-lg" href="{{ path('acte_create') }}" role="button">
                     <i class="fas fa-laptop"></i>
                     Commencer la saisie !
                 </a>

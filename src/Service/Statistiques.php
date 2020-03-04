@@ -83,6 +83,23 @@ class Statistiques
         )
             ->getResult();
     }
+
+    /**
+     * Retourne les statistiques de saisies de l'agent de saisie
+     *
+     * @return Integer
+     */
+    public function getCompteur($user)
+    {
+        return $this->manager->createQuery(
+            'SELECT COUNT(a.numeroActe) as compteur
+            FROM App\Entity\ActeDeces a
+            JOIN a.agentSaisie u
+            WHERE u = :user'
+        )
+            ->setParameter('user', $user)
+            ->getSingleScalarResult();
+    }
 }
 
 ?>

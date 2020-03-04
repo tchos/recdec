@@ -4,10 +4,18 @@ namespace App\Entity;
 
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ActeDecesRepository")
  * @ORM\HasLifecycleCallbacks
+ * 
+ * Le nom du décédé doit être unique
+ * @UniqueEntity(
+ *      fields = {"fullName"},
+ *      message = "Un autre décédé porte déjà le même nom, merci de la modifier."
+ * )
  */
 class ActeDeces
 {
@@ -35,6 +43,8 @@ class ActeDeces
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThan(propertyPath="dateNaissance", 
+     *  message="La date de décès ne peut être antérieur à la date de naissance !")
      */
     private $dateDeces;
 
@@ -75,6 +85,8 @@ class ActeDeces
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\GreaterThan(propertyPath="dateActe", 
+     *  message="La date de saisie ne peut être antérieur à la date de signature de l'acte !")
      */
     private $dateSaisie;
 
@@ -90,7 +102,8 @@ class ActeDeces
     private $slug;
 
     /**
-     * CallBack appelé à chaque fois que l'on veut enregistrer un acte de naissance
+     * CallBack appelé à chaque fois que l'on veut enregistrer un acte de naissance pour
+     * calculer automatiquement la date de saisie, le slug et l'âge du décédé.     * 
      * 
      * @ORM\PrePersist
      * @ORM\PreUpdate
@@ -114,6 +127,8 @@ class ActeDeces
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Assert\GreaterThan(propertyPath="dateDeces", 
+     *  message="La date de signature de l'acte ne peut être antérieur à la date de décès !")
      */
     private $dateActe;
 

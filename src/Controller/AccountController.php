@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\ActeDeces;
 use App\Entity\User;
 use App\Form\AccountType;
 use App\Entity\PasswordUpdate;
 use App\Form\PasswordUpdateType;
+use App\Service\Paginator;
+use App\Service\Statistiques;
 use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -128,6 +131,26 @@ class AccountController extends AbstractController
 
         return $this->render('account/password.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * Permet de voir les statistiques de saisies par utilisateur
+     * @Route("account/stats/{page<\d+>?1}", name="users_stats")
+     * 
+     * @param Statistiques $statistiques
+     * @return Response
+     */
+    public function compter(Statistiques $statistiques, Paginator $paginator, $page)
+    {
+        $paginator->setEntityClass(User::class)
+                  ->setLimit(10)
+                  ->setPage($page)
+        ;
+
+        return $this->render("account/stats.html.twig", [
+            'userStats' => $statistiques->getUserStats('DESC'),
+            'paginator' => $paginator
         ]);
     }
 }
