@@ -132,11 +132,6 @@ class ActeDeces
      */
     private $dateActe;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getCentreEtatCivil(): ?CentreEtatCivil
     {
         return $this->centreEtatCivil;
@@ -316,4 +311,5 @@ class ActeDeces
 
         return $this;
     }
+
 }

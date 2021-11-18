@@ -60,6 +60,11 @@ class CentreEtatCivil
      */
     private $slug;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Arrondissements::class, inversedBy="centreEtatCivils")
+     */
+    private $arrondissement;
+
     public function __construct()
     {
         $this->acteDeces = new ArrayCollection();
@@ -161,6 +166,18 @@ class CentreEtatCivil
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getArrondissement(): ?Arrondissements
+    {
+        return $this->arrondissement;
+    }
+
+    public function setArrondissement(?Arrondissements $arrondissement): self
+    {
+        $this->arrondissement = $arrondissement;
 
         return $this;
     }
