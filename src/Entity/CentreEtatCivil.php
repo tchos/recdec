@@ -129,7 +129,7 @@ class CentreEtatCivil
 
     /**
      * @return Collection|ActeDeces[]
-     */
+
     public function getActeDeces(): Collection
     {
         return $this->acteDeces;
@@ -157,6 +157,7 @@ class CentreEtatCivil
 
         return $this;
     }
+     * */
 
     public function getSlug(): ?string
     {
@@ -180,5 +181,11 @@ class CentreEtatCivil
         $this->arrondissement = $arrondissement;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return $this->libelle;
     }
 }

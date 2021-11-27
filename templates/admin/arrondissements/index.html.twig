@@ -1,0 +1,38 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Ajouter un arrondissement{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h2 class="my-5">Liste des arrondissements</h2>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th><i class="fas fa-list-ol"></i> N°</th>
+                <th>Nom de l'arrondissement</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set i = 1 %}
+            {% set arrondissements = paginator.data %}
+            {% for arrondissement in arrondissements %}
+                <tr>
+                    <td>{{ i }}</td>
+                    <td>{{ arrondissement.libelleArrondissement }}</td>
+                    <td>
+                        <a href="{{ path('arrondissement_edit', {'id': arrondissement.id}) }}" class="btn btn-primary">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% set i = i + 1 %}
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {# service de pagination: voir le template pagination.html.twig et le service paginator.php #}
+        {{ paginator.display() }}
+    </div>
+{% endblock %}

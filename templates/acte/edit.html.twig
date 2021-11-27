@@ -2,6 +2,10 @@
 
 {% block title %}MODIFICATION DE L'ACTE DE DÉCÈS n° {{ acteDeces.numeroActe }}{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}" />
+{% endblock %}
+
 {% block body %}
     <div class="container">
         <h1 class="h1">MODIFICATION DE L'ACTE DE DÉCÈS n° {{ acteDeces.numeroActe }} !</h1>
@@ -67,4 +71,17 @@
 
         {{ form_end(form) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-ui.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#acte_deces_centreEtatCivil").autocomplete({
+                source: '{{ asset('php/search-autocomplete.php') }}',
+                minLength: 3,
+            });
+        });
+    </script>
 {% endblock %}

@@ -28,7 +28,7 @@
                         <td>{{ acte.dateDeces | date("d/m/Y") }}</td>
                         <td>{{ acte.dateSaisie | date("d/m/Y") }}</td>
                         <td>
-                            <a href="#" class="btn btn-primary">
+                            <a href="{{ path('admin_acte_edit', {'id': acte.id}) }}" class="btn btn-primary">
                                 <i class="fas fa-edit"></i>
                             </a>
                             <a href="#" class="btn btn-danger">

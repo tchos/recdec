@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 
 {% block title %}NOUVEL ACTE DE DÉCÈS{% endblock %}
 
@@ -20,7 +20,7 @@
             <div class="alert alert-secondary">
                 <div class="row">
                     <div class="col">
-                        {{ form_row(form.centreEtatCivil, {'attr': {'autocomplete': 'on'}}) }}
+                        {{ form_row(form.centreEtatCivil) }}
                     </div>
                     <div class="col">
                         {{ form_row(form.numeroActe) }}

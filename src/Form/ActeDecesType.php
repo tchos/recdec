@@ -42,11 +42,9 @@ class ActeDecesType extends ApplicationType
                 $this->getConfiguration("Déclarant du décès", "Ex: KWETTE ELOHIM MELCHISEDEC"))
 
             ->add('dateActe', DateType::class, ['widget' => 'single_text'])
-            
-            ->add('centreEtatCivil', EntityType::class, [
-                'class' => CentreEtatCivil::class,
-                "choice_label" => "libelle"
-            ])
+
+            ->add('centreEtatCivil', TextType::class,
+                $this->getConfiguration("Centre d'Etat Civil", "Ex: DOUALA III"))
         ;
     }
 

@@ -13,8 +13,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * 
  * Le nom du décédé doit être unique
  * @UniqueEntity(
- *      fields = {"fullName"},
- *      message = "Un autre décédé porte déjà le même nom, merci de la modifier."
+ *      fields = {"fullName", "numeroActe"},
+ *      message = "Un autre décédé porte déjà le même nom, merci de le modifier."
  * )
  */
 class ActeDeces
@@ -27,7 +27,7 @@ class ActeDeces
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\CentreEtatCivil", inversedBy="acteDeces")
+     * @ORM\Column(type="string", length=255)
      */
     private $centreEtatCivil;
 
@@ -132,12 +132,17 @@ class ActeDeces
      */
     private $dateActe;
 
-    public function getCentreEtatCivil(): ?CentreEtatCivil
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getCentreEtatCivil(): ?string
     {
         return $this->centreEtatCivil;
     }
 
-    public function setCentreEtatCivil(?CentreEtatCivil $centreEtatCivil): self
+    public function setCentreEtatCivil(string $centreEtatCivil): self
     {
         $this->centreEtatCivil = $centreEtatCivil;
 

@@ -28,7 +28,6 @@ class ActeController extends AbstractController
                   ->setUser($this->getUser())
                   ->setPage($page)
         ;
-
         return $this->render('acte/index.html.twig', [
             'paginator' => $paginator,
         ]);
@@ -57,7 +56,6 @@ class ActeController extends AbstractController
         /**
          * Ayant extrait les infos saisies dans le formulaire, 
          * on vérifie que le formulaire a été soumis et qu'il est valide
-         * 
          */
         if($form->isSubmitted() && $form->isValid())
         {
@@ -97,7 +95,6 @@ class ActeController extends AbstractController
     public function edit(EntityManagerInterface $manager, Request $request, 
         Statistiques $statistiques, ActeDeces $acteDeces)
     {
-
         // constructeur de formulaire de saisie des actes de décès
         $form = $this->createForm(UpdateActeDecesType::class, $acteDeces);
 
@@ -136,7 +133,8 @@ class ActeController extends AbstractController
 
     /**
      * Permet de supprimer un acte de décès
-     * 
+     * @IsGranted("ROLE_USER")
+     *
      * @Route("acte/{id}/delete", name="acte_remove")
      *
      * @param EntityManagerInterface $manager
@@ -160,7 +158,6 @@ class ActeController extends AbstractController
                 car vous n'en êtes pas l'auteur !"
             );
         }
-
         return $this->redirectToRoute("acte_create");
     }
 }
