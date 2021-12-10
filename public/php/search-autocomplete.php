@@ -7,17 +7,17 @@ if(!$conn){
 
 $search = $_GET['term'];
 
-$query = $conn->query("SELECT * FROM `arrondissements` 
-    WHERE `libelle_arrondissement` 
+$query = $conn->query("SELECT * FROM `centre_etat_civil` 
+    WHERE `libelle` 
     LIKE '%".$search."%' 
-    ORDER BY `libelle_arrondissement` ASC") or die(mysqli_connect_errno());
+    ORDER BY `libelle` ASC") or die(mysqli_connect_errno());
 
 $list = array();
 $rows = $query->num_rows;
 
 if($rows > 0){
     while($fetch = $query->fetch_assoc()){
-        $data['value'] = $fetch['libelle_arrondissement'];
+        $data['value'] = $fetch['libelle'];
         array_push($list, $data);
     }
 }

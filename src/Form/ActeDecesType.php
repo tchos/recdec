@@ -20,7 +20,7 @@ class ActeDecesType extends ApplicationType
                 $this->getConfiguration("Numéro de l'acte de dédès", "Ex:1234/YAOUNDE/2142"))
 
             ->add('fullName', TextType::class, 
-                $this->getConfiguration("Noms et prénoms du décédé", "Ex: KWETTE NOUMSI"))
+                $this->getConfiguration("Noms et prénoms du décédé", "Ex: TCHOS LOLO LE MILANAIS"))
 
             ->add('dateDeces', DateType::class, ['widget' => 'single_text'])
 

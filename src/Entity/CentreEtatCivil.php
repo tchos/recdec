@@ -50,8 +50,8 @@ class CentreEtatCivil
      */
     public function PrePersist()
     {
-        if (empty($this->createAt)) {
-            $this->createAt = new \DateTime();
+        if (empty($this->createdAt)) {
+            $this->createdAt = new \DateTime();
         }
     }
 

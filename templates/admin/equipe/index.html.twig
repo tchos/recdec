@@ -1,0 +1,30 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}CREER UNE NOUVELLE EQUIPE{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="h1">Ajouter une nouvelle équipe !</h1>
+
+        {# Affichage du formulaire créé avec symfony#}
+        {{ form_start(form) }}
+            <hr>
+            <div class="alert alert-secondary">
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(form.libelle) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(form.responsable) }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-check"></i>
+                    Créer l'équipe
+                </button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

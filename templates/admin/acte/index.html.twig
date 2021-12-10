@@ -31,7 +31,7 @@
                             <a href="{{ path('admin_acte_edit', {'id': acte.id}) }}" class="btn btn-primary">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="#" class="btn btn-danger">
+                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
                                 <i class="fas fa-trash"></i>
                             </a>
                         </td>
@@ -43,5 +43,24 @@
 
         {# service de pagination: voir le template pagination.html.twig et le service paginator.php #}
         {{ paginator.display() }}
+    </div>
+    <div class="modal" id="myModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Attention </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Voulez-vous réellement supprimer cet acte de décès {{ acte.numeroActe }} ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Supprimer</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

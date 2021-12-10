@@ -80,7 +80,7 @@ class AdminAccountController extends AbstractController
             );
 
             // Redirection vers la page de connexion
-            return $this->redirectToRoute('admin_user_index');
+            return $this->redirectToRoute('admin_account_register');
         }
 
         return $this->render('admin/account/registration.html.twig', [

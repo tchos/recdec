@@ -32,6 +32,9 @@ class AdminCECController extends AbstractController
          */
         if ($form->isSubmitted() && $form->isValid())
         {
+            // Celui qui a créé le CEC sera le user connecté
+            $cec->setCreatedBy($this->getUser()->getUsername());
+
             // Persistence de l'entité Arrondissement
             $manager->persist($cec);
             $manager->flush();
