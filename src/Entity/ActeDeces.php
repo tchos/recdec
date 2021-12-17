@@ -45,6 +45,8 @@ class ActeDeces
      * @ORM\Column(type="date")
      * @Assert\GreaterThan(propertyPath="dateNaissance", 
      *  message="La date de décès ne peut être antérieur à la date de naissance !")
+     * @Assert\GreaterThan ("-11 years",
+     *     message="On ne saisit que les actes dont la date de décès est supérieure à 2010")
      */
     private $dateDeces;
 
@@ -55,11 +57,15 @@ class ActeDeces
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\LessThanOrEqual(value=18,
+     *     message="Le décédé doit avoir au moins 18 ans pour que son acte soit enregistré")
      */
     private $age;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\LessThanOrEqual ("-18 years",
+     *     message="Le décédé doit avoir au moins 18 ans pour que son acte soit enregistré")
      */
     private $dateNaissance;
 
@@ -116,8 +122,8 @@ class ActeDeces
             $this->dateSaisie = new \DateTime();
         }
         if (empty($this->age)) {
-            //age = dateNaissance - dateDeces
-            $this->age = $this->dateDeces->diff($this->dateNaissance)->format('%y');
+            //age = dateDeces - dateNaissance
+            $this->age = $this->dateNaissance->diff($this->dateDeces)->format('%y');
         }
         if (empty($this->slug)) {
             $slugify = new Slugify();

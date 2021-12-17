@@ -9,6 +9,7 @@ use App\Service\Statistiques;
 use App\Form\UpdateActeDecesType;
 use App\Repository\ActeDecesRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -62,14 +63,25 @@ class ActeController extends AbstractController
             // L'agent de saisie sera le user connecté
             $acteDeces->setAgentSaisie($this->getUser());
 
-            // Persistence de l'entité ActeDeces
-            $manager->persist($acteDeces);
-            $manager->flush();
+            // Le décédé doit avoir au mois 18 ans
+            $age = $acteDeces->getDateNaissance()->diff($acteDeces->getDateDeces())->format('%y');
 
-            // Alerte succès de l'enregistrement de l'acte de décès
-            $this->addFlash("success", "Acte de décès enregistré avec succès !");
+            if ( $age < 18 )
+            {
+                // $form->get('dateNaissance') me donne accès au champ dateNaissance du formulaire
+                $form->get('dateNaissance')->addError(new FormError("Le décédé doit avoir au moins 18 ans pour 
+                    que son acte soit enregistré !"));
+            }else {
 
-            return $this->redirectToRoute('acte_create');
+                // Persistence de l'entité ActeDeces
+                $manager->persist($acteDeces);
+                $manager->flush();
+
+                // Alerte succès de l'enregistrement de l'acte de décès
+                $this->addFlash("success", "Acte de décès enregistré avec succès !");
+
+                return $this->redirectToRoute('acte_create');
+            }
         }
 
         // Compteur de l'agent de saisie
