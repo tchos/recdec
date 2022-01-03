@@ -98,6 +98,9 @@ class AdminActeController extends AbstractController
         // constructeur de formulaire de saisie des actes de décès
         $form = $this->createForm(UpdateActeDecesType::class, $acteDeces);
 
+        // On met à jour la date de saisie
+        $acteDeces->setDateSaisie(new \DateTime());
+
         // handlerequest() permet de parcourir la requête et d'extraire les informations du formulaire
         $form->handleRequest($request);
 
@@ -133,7 +136,7 @@ class AdminActeController extends AbstractController
 
     /**
      * Permet de supprimer un acte de décès
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_USER")
      *
      * @Route("acte/{id}/delete", name="acte_remove")
      *

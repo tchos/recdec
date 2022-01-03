@@ -70,7 +70,7 @@ class ActeController extends AbstractController
             {
                 // $form->get('dateNaissance') me donne accès au champ dateNaissance du formulaire
                 $form->get('dateNaissance')->addError(new FormError("Le décédé doit avoir au moins 18 ans pour 
-                    que son acte soit enregistré !"));
+                    que l'acte soit enregistré !"));
             }else {
 
                 // Persistence de l'entité ActeDeces
@@ -95,7 +95,7 @@ class ActeController extends AbstractController
 
     /**
      * Permet de modifier un acte de décès saisi
-     * 
+     *
      * @Route("acte/{id}/edit", name="acte_edit")
      * @IsGranted("ROLE_USER")
      *
@@ -104,33 +104,49 @@ class ActeController extends AbstractController
      * @param ActeDeces $acteDeces
      * @return Response
      */
-    public function edit(EntityManagerInterface $manager, Request $request, 
-        Statistiques $statistiques, ActeDeces $acteDeces)
+    public function edit(EntityManagerInterface $manager, Request $request,
+                         Statistiques $statistiques, ActeDeces $acteDeces)
     {
         // constructeur de formulaire de saisie des actes de décès
         $form = $this->createForm(UpdateActeDecesType::class, $acteDeces);
+
+        // On met à jour la date de saisie
+        $acteDeces->setDateSaisie(new \DateTime());
+
+        // Le décédé doit avoir au mois 18 ans
+        $age = $acteDeces->getDateNaissance()->diff($acteDeces->getDateDeces())->format('%y');
 
         // handlerequest() permet de parcourir la requête et d'extraire les informations du formulaire
         $form->handleRequest($request);
 
         /**
-         * Ayant extrait les infos saisies dans le formulaire, 
+         * Ayant extrait les infos saisies dans le formulaire,
          * on vérifie que le formulaire a été soumis et qu'il est valide
-         * 
+         *
          */
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            // Le décédé doit avoir au mois 18 ans
+            $age = $acteDeces->getDateNaissance()->diff($acteDeces->getDateDeces())->format('%y');
 
-            // Persistence de l'entité ActeDeces
-            $manager->persist($acteDeces);
+            if ( $age < 18 )
+            {
+                // $form->get('dateNaissance') me donne accès au champ dateNaissance du formulaire
+                $form->get('dateNaissance')->addError(new FormError("Le décédé doit être agé d'au moins 18 ans pour 
+                    que son acte soit enregistré !"));
+            }else {
+                // Persistence de l'entité ActeDeces
+                $manager->persist($acteDeces);
 
-            // Envoyer réellement la requête
-            $manager->flush();
+                // Envoyer réellement la requête
+                $manager->flush();
 
-            // Alerte succès de l'enregistrement de l'acte de décès
-            $this->addFlash("success", "L'acte de décès N° <strong>{$acteDeces->getNumeroActe()}</strong> a 
+                // Alerte succès de l'enregistrement de l'acte de décès
+                $this->addFlash("success", "L'acte de décès N° <strong>{$acteDeces->getNumeroActe()}</strong> a 
                 été modifié avec succès !");
 
-            return $this->redirectToRoute('acte_create');
+                return $this->redirectToRoute('acte_create');
+            }
         }
 
         // Compteur de l'agent de saisie
