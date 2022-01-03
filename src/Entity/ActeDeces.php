@@ -45,8 +45,8 @@ class ActeDeces
      * @ORM\Column(type="date")
      * @Assert\GreaterThan(propertyPath="dateNaissance", 
      *  message="La date de décès ne peut être antérieur à la date de naissance !")
-     * @Assert\GreaterThan ("-11 years",
-     *     message="On ne saisit que les actes dont la date de décès est supérieure à 2010")
+     * @Assert\GreaterThan ("-6 years",
+     *     message="On ne saisit que les actes dont la date de décès est antérieure à 2015")
      */
     private $dateDeces;
 
@@ -57,7 +57,7 @@ class ActeDeces
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\LessThanOrEqual(value=18,
+     * @Assert\GreaterThanOrEqual(value=18,
      *     message="Le décédé doit avoir au moins 18 ans pour que son acte soit enregistré")
      */
     private $age;
