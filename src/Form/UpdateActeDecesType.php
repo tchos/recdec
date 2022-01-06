@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\ActeDeces;
-use App\form\ApplicationType;
+use App\Form\ApplicationType;
 use App\Entity\CentreEtatCivil;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
