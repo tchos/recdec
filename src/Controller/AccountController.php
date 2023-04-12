@@ -136,6 +136,20 @@ class AccountController extends AbstractController
 
     /**
      * Permet de voir les statistiques de saisies par utilisateur
+     * @Route("account/statsfosa", name="users_statsfosa")
+     *
+     * @param Statistiques $statistiques
+     * @return Response
+     */
+    public function compterDecedeFosa(Statistiques $statistiques)
+    {
+        return $this->render("account/statsfosa.html.twig", [
+            'userStats' => $statistiques->getUserStatsFosa('DESC')
+        ]);
+    }
+
+    /**
+     * Permet de voir les statistiques de saisies par utilisateur
      * @Route("account/stats/{page<\d+>?1}", name="users_stats")
      * 
      * @param Statistiques $statistiques

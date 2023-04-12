@@ -1,0 +1,1 @@
+LOAD DATA LOCAL INFILE 'morgue.csv' INTO TABLE morgue FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n' IGNORE 1 LINES (fosa,slug,statut,type,observation);

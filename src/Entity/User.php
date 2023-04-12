@@ -72,10 +72,16 @@ class User implements UserInterface
      */
     private $userRoles;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Decede::class, mappedBy="agentSaisie")
+     */
+    private $decedes;
+
     public function __construct()
     {
         $this->acteDeces = new ArrayCollection();
         $this->userRoles = new ArrayCollection();
+        $this->decedes = new ArrayCollection();
     }
 
     /**
@@ -243,4 +249,34 @@ class User implements UserInterface
     }
 
     public function eraseCredentials(){}
+
+    /**
+     * @return Collection|Decede[]
+     */
+    public function getDecedes(): Collection
+    {
+        return $this->decedes;
+    }
+
+    public function addDecede(Decede $decede): self
+    {
+        if (!$this->decedes->contains($decede)) {
+            $this->decedes[] = $decede;
+            $decede->setAgentSaisie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDecede(Decede $decede): self
+    {
+        if ($this->decedes->removeElement($decede)) {
+            // set the owning side to null (unless already changed)
+            if ($decede->getAgentSaisie() === $this) {
+                $decede->setAgentSaisie(null);
+            }
+        }
+
+        return $this;
+    }
 }

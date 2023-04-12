@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NOUVEAU DECEDE{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}" />
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="h1">Saisir les informations d'un nouveau décédé !</h1>
+
+        {# Affichage du formulaire créé avec symfony#}
+        {{ form_start(form) }}
+        <h3 class="text-primary">
+            Veuillez saisir les informations telles que portées sur la fiche de collecte
+            <span class="badge badge-primary float-right">COMPTEUR: {{ compteur }}</span>
+        </h3>
+        <hr>
+        <div class="alert alert-secondary">
+            <div class="row mb-3">
+                <div class="col">
+                    {{ form_row(form.region) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.fosa, {'attr': {'autocomplete': 'on'}}) }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    {{ form_row(form.ville) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.equipe) }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-7">
+                    {{ form_row(form.nom) }}
+                </div>
+                <div class="col-2">
+                    {{ form_row(form.sexe) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.naissance) }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    {{ form_row(form.profession) }}
+                </div>
+                <div class="col-3">
+                    {{ form_row(form.dateDeces) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.lieuDeces) }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-3">{{ form_row(form.dateEntreeMorgue) }}</div>
+                <div class="col-3">{{ form_row(form.dateSortieMorgue) }}</div>
+                <div class="col">{{ form_row(form.lieuInhumation) }}</div>
+            </div>
+        </div>
+        <div class="alert alert-success clearfix">
+            <h3 class="alert-heading">Enregistrer les informations sur le décédé</h3>
+            <p>
+                Vous êtes sur le point d'enregitrer un nouveau décédé,
+                cliquez sur le bouton "Enregister" !
+            </p>
+            <button type="submit" class="btn btn-primary float-right">
+                <i class="fas fa-check"></i>
+                Enregistrer
+            </button>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-ui.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#decede_fosa").autocomplete({
+                source: '{{ asset('php/fosa-autocomplete.php') }}',
+                minLength: 3,
+            });
+        });
+        $(document).ready(function(){
+            $("#decede_ville").autocomplete({
+                source: '{{ asset('php/ville-autocomplete.php') }}',
+                minLength: 3,
+            });
+        });
+        $(document).ready(function(){
+            $("#decede_lieuDeces").autocomplete({
+                source: '{{ asset('php/lieu-autocomplete.php') }}',
+                minLength: 3,
+            });
+        });
+        $(document).ready(function(){
+            $("#decede_lieuInhumation").autocomplete({
+                source: '{{ asset('php/lieu-autocomplete.php') }}',
+                minLength: 3,
+            });
+        });
+    </script>
+{% endblock %}

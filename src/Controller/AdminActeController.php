@@ -20,7 +20,7 @@ class AdminActeController extends AbstractController
      * Permet de lister les saisies effectuées pas l'administrateur
      * @Route("/admin/actes/{page<\d+>?1}", name="admin_acte_index")
      */
-    public function index($page, Paginator $paginator)
+    public function index($page, Paginator $paginator, ActeDecesRepository $repository)
     {
         $paginator->setEntityClass(ActeDeces::class)
                   ->setUser($this->getUser())
@@ -28,6 +28,7 @@ class AdminActeController extends AbstractController
 
         return $this->render('admin/acte/index.html.twig', [
             'paginator' => $paginator,
+            'actes' => $repository->findBy(['agentSaisie' => $this->getUser()])
         ]);
     }
 

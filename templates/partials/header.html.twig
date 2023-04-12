@@ -15,6 +15,31 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link taille" href="{{ path('decede_new') }}">
+                    <i class="fas fa-user-alt-slash"></i>
+                    Saisir décédé
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link taille" href="{{ path('decede_list') }}">
+                    <i class="fas fa-eye"></i>
+                    Voir mes saisies
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link taille" href="{{ path('users_statsfosa') }}">
+                    <i class="fas fa-chart-bar"></i>
+                    Statistiques de saisie
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link taille" href="{{ path('collecte_equipe') }}">
+                    <i class="fas fa-chart-bar"></i>
+                    Données collectées par équipe
+                </a>
+            </li>
+            {#
+            <li class="nav-item">
                 <a class="nav-link taille" href="{{ path('acte_create') }}">
                    <i class="fas fa-user-alt-slash"></i>
                     Saisir acte de décès
@@ -32,6 +57,7 @@
                     Statistiques de saisie
                 </a>
             </li>
+            #}
         </ul>
         <ul class="navbar-nav ml-auto">
             {% if app.user %}
@@ -41,7 +67,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropDownLink">
                         <a href="#" class="dropdown-item">Saisir acte</a>
-                        <a href="{{ path('actes_index') }}" class="dropdown-item">Mes saisies</a>
+                        <a href="{{ path('decede_list') }}" class="dropdown-item">Mes saisies</a>
                         <div class="dropdown-divider"></div>
                         <a href="{{ path('account_password') }}" class="dropdown-item">Modifier mot de passe</a>
                         <a href="{{ path('account_profile') }}" class="dropdown-item">Modifier mon profil</a>
