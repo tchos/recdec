@@ -7,17 +7,17 @@ if(!$conn){
 
 $search = $_GET['term'];
 
-$query = $conn->query("SELECT * FROM `centre_etat_civil` 
-    WHERE `libelle` 
+$query = $conn->query("SELECT * FROM `decede` 
+    WHERE `ville` 
     LIKE '%".$search."%' 
-    ORDER BY `libelle` ASC") or die(mysqli_connect_errno());
+    ORDER BY `ville` ASC") or die(mysqli_connect_errno());
 
 $list = array();
 $rows = $query->num_rows;
 
 if($rows > 0){
     while($fetch = $query->fetch_assoc()){
-        $data['value'] = $fetch['libelle'];
+        $data['value'] = $fetch['ville'];
         array_push($list, $data);
     }
 }

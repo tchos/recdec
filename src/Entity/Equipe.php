@@ -57,9 +57,15 @@ class Equipe
      */
     private $slug;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Decede::class, mappedBy="equipe")
+     */
+    private $decedes;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->decedes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -130,6 +136,36 @@ class Equipe
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Decede[]
+     */
+    public function getDecedes(): Collection
+    {
+        return $this->decedes;
+    }
+
+    public function addDecede(Decede $decede): self
+    {
+        if (!$this->decedes->contains($decede)) {
+            $this->decedes[] = $decede;
+            $decede->setEquipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDecede(Decede $decede): self
+    {
+        if ($this->decedes->removeElement($decede)) {
+            // set the owning side to null (unless already changed)
+            if ($decede->getEquipe() === $this) {
+                $decede->setEquipe(null);
+            }
+        }
 
         return $this;
     }

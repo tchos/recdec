@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20211126164339 extends AbstractMigration
+final class Version20230326102612 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,9 +22,7 @@ final class Version20211126164339 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE acte_deces DROP FOREIGN KEY FK_4F50E0F27DA420AC');
-        $this->addSql('DROP INDEX IDX_4F50E0F27DA420AC ON acte_deces');
-        $this->addSql('ALTER TABLE acte_deces ADD centre_etat_civil VARCHAR(255) NOT NULL, DROP centre_etat_civil_id');
+        $this->addSql('CREATE TABLE morgue (id INT AUTO_INCREMENT NOT NULL, forsa VARCHAR(255) NOT NULL, slug VARCHAR(255) NOT NULL, statut VARCHAR(32) NOT NULL, type VARCHAR(64) NOT NULL, observation VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
     }
 
     public function down(Schema $schema) : void
@@ -32,8 +30,6 @@ final class Version20211126164339 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE acte_deces ADD centre_etat_civil_id INT DEFAULT NULL, DROP centre_etat_civil');
-        $this->addSql('ALTER TABLE acte_deces ADD CONSTRAINT FK_4F50E0F27DA420AC FOREIGN KEY (centre_etat_civil_id) REFERENCES centre_etat_civil (id) ON UPDATE NO ACTION ON DELETE NO ACTION');
-        $this->addSql('CREATE INDEX IDX_4F50E0F27DA420AC ON acte_deces (centre_etat_civil_id)');
+        $this->addSql('DROP TABLE morgue');
     }
 }
