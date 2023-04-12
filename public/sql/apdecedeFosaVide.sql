@@ -125,20 +125,20 @@ CREATE TABLE `decede` (
   `date_sortie_morgue` date DEFAULT NULL,
   `profession` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `lieu_inhumation` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cni` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telephone_depositaire` varchar(24) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ville` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `region` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `fosa` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `equipe_id` int DEFAULT NULL,
   `agent_saisie_id` int DEFAULT NULL,
   `date_deces` date DEFAULT NULL,
+  `date_saisie` datetime NOT NULL,
+  `age` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_28B37E806D861B89` (`equipe_id`),
   KEY `IDX_28B37E805670B5A9` (`agent_saisie_id`),
   CONSTRAINT `FK_28B37E805670B5A9` FOREIGN KEY (`agent_saisie_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FK_28B37E806D861B89` FOREIGN KEY (`equipe_id`) REFERENCES `equipe` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,6 +147,7 @@ CREATE TABLE `decede` (
 
 LOCK TABLES `decede` WRITE;
 /*!40000 ALTER TABLE `decede` DISABLE KEYS */;
+INSERT INTO `decede` VALUES (3,'SOUOPGUY ALEXANDRE','M','1946-12-12','2014-01-12','DOUALA','2014-01-11','FONCTIONNAIRE','BANDJOUN','DOUALA','LITTORAL','Hopital Laquintinie de Douala (HLD)',11,1,'2014-02-12','2023-03-27 05:53:18',67),(4,'KWETTE PIERRE','M','1956-12-12','2019-01-12','YAOUNDE','2019-01-12','STATISTICIEN','MBOUDA','YAOUNDE','CENTRE','Hopital Militaire de  Yaoundé(CFTA)',13,1,'2019-01-13','2023-03-27 15:51:32',62),(5,'MENDO ZE','M','1988-12-12','2015-11-13','YAOUNDE','2015-11-14','FONCTIONNAIRE','MBENGBIS','YAOUNDE','CENTRE','Hopital Général de Yaoundé(HGY)',19,1,'2015-11-11','2023-03-27 18:07:14',26);
 /*!40000 ALTER TABLE `decede` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,7 +164,7 @@ CREATE TABLE `equipe` (
   `responsable` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,7 +173,7 @@ CREATE TABLE `equipe` (
 
 LOCK TABLES `equipe` WRITE;
 /*!40000 ALTER TABLE `equipe` DISABLE KEYS */;
-INSERT INTO `equipe` VALUES (11,'Equipe centralisation','Kwette Noumsi','equipe-centralisation'),(12,'GROUPE 1','NJODZEKA LEILA','groupe-1'),(13,'GROUPE 2','MBONG PHILOSOPHE FIN','groupe-2'),(14,'GROUPE 3','EDOA MIRABELLE','groupe-3'),(15,'GROUPE 4','ANOKE NDONNE JEANNETTE','groupe-4'),(16,'GROUPE 5','ALLOBWEDE ROLAND','groupe-5'),(17,'GROUPE 6','NGUITA ERNEST','groupe-6'),(18,'GROUPE 7','BAMBE JACQUES','groupe-7'),(19,'GROUPE 8','AGONI CHRISTOPHE','groupe-8'),(20,'GROUPE 9','TAMBA ALEXANDRE','groupe-9'),(21,'GROUPE 10','MEKA PIERRE PLACIDE','groupe-10'),(22,'GROUPE 11','FONYONGA AMZA','groupe-11');
+INSERT INTO `equipe` VALUES (11,'Equipe centralisation','Kwette Noumsi','equipe-centralisation'),(12,'GROUPE 1','NJODZEKA LEILA','groupe-1'),(13,'GROUPE 2','MBONG PHILOSOPHE FIN','groupe-2'),(14,'GROUPE 3','EDOA MIRABELLE','groupe-3'),(15,'GROUPE 4','ANOKE NDONNE JEANNETTE','groupe-4'),(16,'GROUPE 5','ALLOBWEDE ROLAND','groupe-5'),(17,'GROUPE 6','NGUITA ERNEST','groupe-6'),(18,'GROUPE 7','BAMBE JACQUES','groupe-7'),(19,'GROUPE 8','AGONI CHRISTOPHE','groupe-8'),(20,'GROUPE 9','TAMBA ALEXANDRE','groupe-9'),(21,'GROUPE 10','MEKA PIERRE PLACIDE','groupe-10'),(22,'GROUPE 11','FONYONGA AMZA','groupe-11'),(23,'GROUPE 12','FONYONGA AMZA','groupe-12');
 /*!40000 ALTER TABLE `equipe` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,7 +197,7 @@ CREATE TABLE `migration_versions` (
 
 LOCK TABLES `migration_versions` WRITE;
 /*!40000 ALTER TABLE `migration_versions` DISABLE KEYS */;
-INSERT INTO `migration_versions` VALUES ('20211118122057','2021-11-18 12:43:11'),('20211118124354','2021-11-18 12:44:02'),('20211118124856','2021-11-18 12:49:43'),('20211126164339','2021-11-26 16:44:25'),('20230326102612','2023-03-26 10:26:32'),('20230326104719','2023-03-26 10:47:35'),('20230326105216','2023-03-26 10:52:33'),('20230326105451','2023-03-26 10:54:58'),('20230326124657','2023-03-26 12:47:11');
+INSERT INTO `migration_versions` VALUES ('20211118122057','2021-11-18 12:43:11'),('20211118124354','2021-11-18 12:44:02'),('20211118124856','2021-11-18 12:49:43'),('20211126164339','2021-11-26 16:44:25'),('20230326102612','2023-03-26 10:26:32'),('20230326104719','2023-03-26 10:47:35'),('20230326105216','2023-03-26 10:52:33'),('20230326105451','2023-03-26 10:54:58'),('20230326124657','2023-03-26 12:47:11'),('20230327051050','2023-03-27 05:13:23'),('20230327052254','2023-03-27 05:23:01'),('20230327052523','2023-03-27 05:25:32'),('20230412061609','2023-04-12 06:16:35');
 /*!40000 ALTER TABLE `migration_versions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -215,7 +216,7 @@ CREATE TABLE `morgue` (
   `type` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `observation` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -276,6 +277,7 @@ CREATE TABLE `role_user` (
 
 LOCK TABLES `role_user` WRITE;
 /*!40000 ALTER TABLE `role_user` DISABLE KEYS */;
+INSERT INTO `role_user` VALUES (1,1);
 /*!40000 ALTER TABLE `role_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -318,4 +320,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-03-26 17:08:07
+-- Dump completed on 2023-04-12  7:51:37
